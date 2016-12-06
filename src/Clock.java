@@ -1,4 +1,6 @@
-import exception.*;
+package me.libs.clock;
+
+import me.libs.clock.exception.*;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -99,12 +101,21 @@ public class Clock {
         tickHandler = Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(callback, 0, millis, timeUnit);
     }
 
-    public void stop() {
-        executor.shutdownNow();
-        tickHandler.cancel(true);
+    /** Stop clock. 
+     *      boolean stop -> If true cancels every called callbacks which have not been executed. 
+     *                      If false it doesn't accept incoming works, executes what's left and stops
+     */
+    public void stop(boolean cancel) {
+        if (cancel) {
+            executor.shutdownNow();
+        } else {
+            executor.shutdown();
+        }
+        tickHandler.cancel(cancel);
         run = false;
     }
 
+    /** Returns if the clock is running or not */
     public boolean isRunning() {
         return run;
     }
