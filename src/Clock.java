@@ -102,7 +102,7 @@ public class Clock {
     }
 
     /** Stop clock. 
-     *      boolean stop -> If true cancels every called callbacks which have not been executed. 
+     *      boolean cancel -> If true cancels every called callbacks which have not been executed. 
      *                      If false it doesn't accept incoming works, executes what's left and stops
      */
     public void stop(boolean cancel) {
